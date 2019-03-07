@@ -17,7 +17,7 @@ To build the three executables without the Makefile, execute the following comma
 `g++ -Wall -I. -O2 -o embed spectralDrawing.cpp`  
 `g++ -Wall -I. -O2 -o mtx2csr mtx2csr.cpp`  
 `gcc -Wall -O2 -std=c99 -o draw draw_graph.c lodepng.c`  
-Just doing `make` (or `mingw32-make.exe`) on the command line will execute the above three commands.
+Just doing `make` (or `mingw32-make.exe` on Windows) on the command line will execute the above three commands.
 Note that Eigen generates a lot of warnings on Windows 10 + MinGW.
 
 ## Usage Examples
