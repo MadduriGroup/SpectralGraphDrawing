@@ -4,10 +4,10 @@ This repository includes code for our 2018 Graph Algorithm Building Blocks (GABB
 
 ## Getting Started
 
-Please see spectralDrawing.cpp. The C++ linear algebra library [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) is required for compilation. We used Eigen version 3.3.2 for the results in the paper, but the latest version also works. Just download and copy the Eigen folder to the current working directory. A Makefile is included for building spectralDrawing.cpp and two other utilities (mtx2csr.cpp for converting a Matrix Market file to an intermediate binary format; graph_draw.c for taking vertex coordinates and creating a PNG file). We tested the code on Linux and Windows 10 + MinGW. To build the three executables without the Makefile, execute the following commands:  
+Please see spectralDrawing.cpp. The C++ linear algebra library [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) is required for compilation. We used Eigen version 3.3.2 for the results in the paper, but the latest version also works. Just download and copy the Eigen folder to the current working directory. A Makefile is included for building spectralDrawing.cpp and two other utilities (mtx2csr.cpp for converting a Matrix Market file to an intermediate binary format; graph_draw.c for taking vertex coordinates and creating a PNG file). We tested the code on Linux (Manjaro, gcc 8.2.1) and Windows 10 + MinGW (gcc 7.2.0). To build the three executables without the Makefile, execute the following commands:  
 `g++ -Wall -I. -O2 -o embed spectralDrawing.cpp`  
 `g++ -Wall -I. -O2 -o mtx2csr mtx2csr.cpp`  
-`gcc -Wall -O2 -o draw draw_graph.c lodepng.c`  
+`gcc -Wall -O2 -std=c99 -o draw draw_graph.c lodepng.c`  
 Note that Eigen generates a lot of warnings on Windows 10 + MinGW.
 
 ## Usage Examples
