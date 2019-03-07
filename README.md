@@ -25,7 +25,7 @@ If you are unable to run the bootstrap.sh script or get some errors, please exec
 `mv lodepng.cpp lodepng.c`  
 Our code will only use some header files from the Eigen directory. Note that Eigen generates a lot of warnings on Windows 10 + MinGW.
 
-To build the three required executables `make` (or `mingw32-make.exe` on Windows), execute the following commands:  
+To build the three required executables without using `make` (or `mingw32-make.exe` on Windows), execute the following commands:  
 `g++ -Wall -I. -O2 -fopenmp -o embed spectralDrawing.cpp`  
 `g++ -Wall -I. -O2 -o mtx2csr mtx2csr.cpp`  
 `gcc -Wall -O2 -std=c99 -o draw draw_graph.c lodepng.c`  
