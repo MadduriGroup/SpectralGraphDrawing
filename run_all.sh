@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -z "$2" ]; then
-	echo "Usage: ./run.sh <UFL group name> <mat-name>"
+	echo "Usage: ./run.sh <SuiteSparse group name> <mat-name>"
 	exit 1
 fi
 matgroup=$1
@@ -10,7 +10,7 @@ mat=$2
 mtx=data/$mat/$mat.mtx
 if [ ! -f $mtx ]; then
 	echo $mtx 'does not exist'
-	echo 'getting from UFL'
+	echo 'getting from SuiteSparse matrix repository'
 	cd data
 	curl -O https://sparse.tamu.edu/MM/$matgroup/$mat.tar.gz
 	tar -zvxf $mat.tar.gz
