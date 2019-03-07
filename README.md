@@ -27,9 +27,9 @@ Create a PNG file.
 
 The included script run_all.sh automates this process.  
 
-For small graphs (< 10,000 vertices), SVG images look much nicer. Example SVG and PNG files for Barth5 are included in this repository.
+For small graphs (< 10,000 vertices), SVG images look much nicer. Example SVG and PNG files with drawings of the barth5 graph are included in this repository. A short video barth5.mp4 shows intermediate steps in creating the drawing.
 
 ## Citing this work
 
 Please cite our paper.  
-Shad Kirmani and Kames Madduri, "Spectral Graph Drawing: Building Blocks and Performance Analysis," in Proc. Workshop on Graph Algorithms Building Blocks (GABB), May 2018. https://doi.org/10.1109/IPDPSW.2018.00053.
+Shad Kirmani and Kamesh Madduri, "Spectral Graph Drawing: Building Blocks and Performance Analysis," in Proc. Workshop on Graph Algorithms Building Blocks (GABB), May 2018. https://doi.org/10.1109/IPDPSW.2018.00053.
