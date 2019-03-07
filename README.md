@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/kmadduri/SpectralGraphDrawing.svg?branch=master)](https://travis-ci.com/kmadduri/SpectralGraphDrawing)  [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1296e6349fdf46baa9b8b0fadbb51a35)](https://app.codacy.com/app/kamesh.madduri/SpectralGraphDrawing?utm_source=github.com&utm_medium=referral&utm_content=kmadduri/SpectralGraphDrawing&utm_campaign=Badge_Grade_Settings)
 
+<img src="barth5_103.gif" style="max-width:100%"/>
+
 This repository includes code for our 2018 Graph Algorithm Building Blocks (GABB) workshop paper [Spectral Graph Drawing: Building Blocks and Performance Analysis](https://doi.org/10.1109/IPDPSW.2018.00053). Our approaches are based on spectral graph drawing algorithms developed by Yehuda Koren, described in this [paper](https://doi.org/10.1016/j.camwa.2004.08.015). 
 
 ## Getting Started
