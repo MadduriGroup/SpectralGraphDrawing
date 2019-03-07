@@ -19,15 +19,15 @@ Get a sparse matrix in Matrix Market format. The [SuiteSparse Matrix Collection]
 Convert the file to intermediate binary representation.  
 `./mtx2csr barth5/barth5.mtx barth5/barth5`  
 
-Execute the graph drawing code, choosing the desired variant. In the example below, we choose coarsening, HDE, and Koren+Tutte refinement.  
-`./embed barth5/barth5.csr 1 1 3`  
+Execute the graph drawing code, choosing the desired variant. In the example below, we choose coarsening, no High Dimensional Embedding, and Koren+Tutte refinement.  
+`./embed barth5/barth5.csr 1 0 3`  
 
 Create a PNG file.  
-`./draw.exe barth5/barth5.csr barth5/barth5.csr_c0_h1_r3_eps0.nxyz barth5/barth5_c0_h1_r3.png`  
+`./draw.exe barth5/barth5.csr barth5/barth5.csr_c1_h0_r3_eps0.nxyz barth5/barth5_c1_h0_r3.png`  
 
 The included script run_all.sh automates this process.  
 
-For small graphs (< 10,000 vertices), SVG images look much nicer.
+For small graphs (< 10,000 vertices), SVG images look much nicer. Example SVG and PNG files for Barth5 are included in this repository.
 
 ## Citing this work
 
