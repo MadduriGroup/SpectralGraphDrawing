@@ -891,9 +891,9 @@ int main(int argc, char **argv) {
      thirdVec.normalize();
   }
 
-  int numTutteSmoothing = 500;
-  double eps = 1e-5;
   if (coarseningType != 2) {
+    int numTutteSmoothing = 500;
+    double eps = 1e-5;
     if (refineType == 0) {
       secondVec.normalize();
       thirdVec.normalize();
