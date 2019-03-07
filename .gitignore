@@ -1,6 +1,5 @@
 # Prerequisites
 Eigen/
-data/
 *.d
 
 # Compiled Object files
@@ -32,3 +31,8 @@ data/
 *.exe
 *.out
 *.app
+
+# Other
+data/
+images/
+draw_graph_working.c
