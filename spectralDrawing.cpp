@@ -113,7 +113,7 @@ simpleCoarsening(graph_t *g, int coarseningType) {
 
     int num_unmatched = coarse_vert_count - num_matched;
     int new_coarse_vert_count = num_matched/2 + num_unmatched;
-    fprintf(stderr, "prev count: %ld, matched: %d, new count: %d\n", 
+    fprintf(stderr, "prev count: %d, matched: %d, new count: %d\n", 
              coarse_vert_count, num_matched, new_coarse_vert_count);
              coarse_vert_count = new_coarse_vert_count;
 
@@ -157,7 +157,7 @@ simpleCoarsening(graph_t *g, int coarseningType) {
   long ecount = 0;
   for (int i=0; i<g->n; i++) {
     int u = vertIDs[i];
-    for (int j=g->rowOffsets[i]; j<g->rowOffsets[i+1]; j++) {
+    for (unsigned int j=g->rowOffsets[i]; j<g->rowOffsets[i+1]; j++) {
       int v = vertIDs[g->adj[j]];
       coarse_edges[ecount++] = u;
       coarse_edges[ecount++] = v;
@@ -319,7 +319,7 @@ simpleCoarsening(graph_t *g, int coarseningType) {
         num_self_loops++;
       } else {
         adjCoarse_noloops[ec++] = v;
-        fprintf(outfp_mtx, "%u %u\n", i+1, v+1);
+        fprintf(outfp_mtx, "%ld %u\n", i+1, v+1);
       }
     }
   } 
@@ -363,7 +363,7 @@ loadToMatrix(SparseMatrix<double,RowMajor>& M, VectorXd& degrees,
       tripletList.push_back(T(i,i,0.5));
       degrees(i) = g->rowOffsets[i+1]-g->rowOffsets[i];
       double nzv = 1/(2.0*(g->rowOffsets[i+1]-g->rowOffsets[i]));
-      for (int j=g->rowOffsets[i]; j<g->rowOffsets[i+1]; j++) {
+      for (unsigned int j=g->rowOffsets[i]; j<g->rowOffsets[i+1]; j++) {
         unsigned int v = g->adj[j];
         tripletList.push_back(T(i, v, nzv));
       }
@@ -373,7 +373,7 @@ loadToMatrix(SparseMatrix<double,RowMajor>& M, VectorXd& degrees,
 
     for (int i=0; i<g->n_coarse; i++) {
       double degree_i = 0;
-      for (int j=g->rowOffsetsCoarse[i]; j<g->rowOffsetsCoarse[i+1]; j++) {
+      for (unsigned int j=g->rowOffsetsCoarse[i]; j<g->rowOffsetsCoarse[i+1]; j++) {
       degree_i += g->eweights[j];
     }
     degrees(i) = degree_i;
@@ -382,10 +382,10 @@ loadToMatrix(SparseMatrix<double,RowMajor>& M, VectorXd& degrees,
    
     tripletList.reserve(g->m_coarse);
  
-    for (int i=0; i<g->n_coarse; i++) {
+    for (unsigned int i=0; i<g->n_coarse; i++) {
       double diag_val = 0;
       double inv_2deg = 1/(2.0*degrees(i));
-      for (int j=g->rowOffsetsCoarse[i]; j<g->rowOffsetsCoarse[i+1]; j++) {
+      for (unsigned int j=g->rowOffsetsCoarse[i]; j<g->rowOffsetsCoarse[i+1]; j++) {
         unsigned int v = g->adjCoarse[j];
         if (v == i) {
           diag_val = g->eweights[j]*inv_2deg;
@@ -419,7 +419,7 @@ bfs(unsigned int *row,
   while(!Q.empty()) {
     unsigned int h = Q.front();
     Q.pop();
-    for (int j=row[h]; j<row[h+1]; j++) {
+    for (unsigned int j=row[h]; j<row[h+1]; j++) {
       s = col[j];
       if (!visited[s]) {
         visited[s] = 1;
@@ -449,7 +449,7 @@ HDE(SparseMatrix<double,RowMajor>& M, graph_t *g,
   LTripletList.reserve(g->m);
   for (int i=0; i<g->n; i++) {
   LTripletList.push_back(T(i,i,degrees(i)));
-    for (int j=g->rowOffsets[i]; j<g->rowOffsets[i+1]; j++) {
+    for (unsigned int j=g->rowOffsets[i]; j<g->rowOffsets[i+1]; j++) {
       unsigned int v = g->adj[j];
       LTripletList.push_back(T(i,v, -1.0));
   }
@@ -817,7 +817,6 @@ int main(int argc, char **argv) {
  
   if (coarseningType > 0) {
     long n_coarse = g.n_coarse;
-    long m_coarse = g.m_coarse;
     SparseMatrix<double,RowMajor> Mc(n_coarse,n_coarse);
     VectorXd degreesc(n_coarse);
     loadToMatrix(Mc, degreesc, &g, coarseningType);

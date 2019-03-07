@@ -60,11 +60,12 @@ int main(int argc, char *argv[])
 		size_t found;
 
 		found = str.find( str2 );
-		if ( found != string::npos )
+		if ( found != string::npos ) {
 		    symmetric = 1; 
-		else 
+		} else { 
 		    symmetric =0;
 		    undirected = symmetric ;
+		}
 	    } 
 	    comment ++;
 	    continue;
@@ -106,7 +107,7 @@ int main(int argc, char *argv[])
 	    unsigned int prevVtx = AdjVector[i][0];
 	    adjVector.push_back( prevVtx );
 
-	    for(int len = 1; len < AdjVector[i].size(); len ++) {
+	    for(unsigned int len = 1; len < AdjVector[i].size(); len ++) {
 		unsigned int currVtx = AdjVector[i][len];	
 		if( currVtx != prevVtx ) {
 		    prevVtx = currVtx;
@@ -165,7 +166,7 @@ int main(int argc, char *argv[])
 
     //Find oldId given newId
     for(long i = 0; i < N; i++) {
-	for(int j =0; j < AdjVector[i].size(); j++) {
+	for(unsigned int j =0; j < AdjVector[i].size(); j++) {
 	    adj[ index ] = AdjVector[i][j];
 	    index ++;
 	}
