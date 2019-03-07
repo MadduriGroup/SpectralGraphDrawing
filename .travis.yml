@@ -1,0 +1,9 @@
+language: cpp
+compiler:
+- gcc
+os:
+- linux
+before_install:
+- ./bootstrap.sh
+script:
+- if [ $TRAVIS_OS_NAME == linux ]; then make; fi

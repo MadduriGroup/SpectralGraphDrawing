@@ -36,3 +36,5 @@ Eigen/
 data/
 images/
 draw_graph_working.c
+lodepng.c
+lodepng.h
