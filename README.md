@@ -23,7 +23,7 @@ Execute the graph drawing code, choosing the desired variant. In the example bel
 `./embed barth5/barth5.csr 1 0 3`  
 
 Create a PNG file.  
-`./draw.exe barth5/barth5.csr barth5/barth5.csr_c1_h0_r3_eps0.nxyz barth5/barth5_c1_h0_r3.png`  
+`./draw barth5/barth5.csr barth5/barth5.csr_c1_h0_r3_eps0.nxyz barth5/barth5_c1_h0_r3.png`  
 
 The included script run_all.sh automates this process.  
 
