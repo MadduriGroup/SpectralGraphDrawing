@@ -14,7 +14,7 @@ To download and set up Eigen for use, please execute the following commands:
 Our code will only use some header files from the Eigen directory.
 
 To build the three executables without the Makefile, execute the following commands:  
-`g++ -Wall -I. -O2 -o embed spectralDrawing.cpp`  
+`g++ -Wall -I. -O2 -fopenmp -o embed spectralDrawing.cpp`  
 `g++ -Wall -I. -O2 -o mtx2csr mtx2csr.cpp`  
 `gcc -Wall -O2 -std=c99 -o draw draw_graph.c lodepng.c`  
 Just doing `make` (or `mingw32-make.exe` on Windows) on the command line will execute the above three commands.
@@ -42,4 +42,4 @@ For small graphs (< 10,000 vertices), SVG images look much nicer. Example SVG an
 ## Citing this work
 
 Please cite our paper.  
-Shad Kirmani and Kamesh Madduri, "Spectral Graph Drawing: Building Blocks and Performance Analysis," in Proc. Workshop on Graph Algorithms Building Blocks (GABB), May 2018. https://doi.org/10.1109/IPDPSW.2018.00053.
+Shad Kirmani and Kamesh Madduri, "Spectral Graph Drawing: Building Blocks and Performance Analysis," in Proc. Workshop on Graph Algorithms Building Blocks (GABB), May 2018. <https://doi.org/10.1109/IPDPSW.2018.00053>.
