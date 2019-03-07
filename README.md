@@ -6,23 +6,31 @@ This repository includes code for our 2018 Graph Algorithm Building Blocks (GABB
 
 ## Getting Started
 
-Please see spectralDrawing.cpp. The C++ linear algebra library [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) is required for compilation. We used Eigen version 3.3.2 for the results in the paper, but the latest version also works fine. Just download and copy the Eigen folder to the current working directory. A Makefile is included for building spectralDrawing.cpp and two other utilities (mtx2csr.cpp for converting a Matrix Market file to an intermediate binary format; graph_draw.c for taking vertex coordinates and creating a PNG file). We tested the code on Linux (Manjaro, gcc 8.2.1) and Windows 10 + MinGW (gcc 7.2.0). 
+The C++ linear algebra library [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) and the [LodePNG](https://lodev.org/lodepng/) PNG image encoder and decoder are required to compile the code. Run the `bootstrap.sh` script to get the required files from Eigen and LodePNG. We used Eigen version 3.3.2 for the results in the paper, but the latest version also works fine. Note that bootstrap.sh uses the commandline utilities curl, tar, mv, and rm. If you do not have these utilities, then please get the files using git or wget or your web browser. 
 
-To download and set up Eigen for use, please execute the following commands:  
-`wget http://bitbucket.org/eigen/eigen/get/3.3.7.tar.gz`  
+A Makefile is included for building spectralDrawing.cpp (the main file with the algorithms) and two other standalone utilities (mtx2csr.cpp for converting a Matrix Market file to an intermediate binary format; graph_draw.c for taking vertex coordinates and drawing graph edges). We tested the code on Linux (Manjaro, gcc 8.2.1) and Windows 10 + MinGW (gcc 7.2.0). 
+
+To summarize, just doing  
+`./bootstrap.sh`  
+`make`  
+should work on most environments.
+
+If you are unable to run the bootstrap.sh script or get some errors, please execute the following commands to get Eigen and LodePNG.    
+`curl -O https://bitbucket.org/eigen/eigen/get/3.3.7.tar.gz`  
 `tar -zvxf 3.3.7.tar.gz`  
 `mv eigen-eigen-*/Eigen .`  
 `rm -rf eigen-eigen-* 3.3.7.tar.gz`  
-Our code will only use some header files from the Eigen directory.
+`curl -O https://github.com/lvandeve/lodepng/blob/master/lodepng.h`  
+`curl -O https://github.com/lvandeve/lodepng/blob/master/lodepng.cpp`  
+`mv lodepng.cpp lodepng.c`  
+Our code will only use some header files from the Eigen directory. Note that Eigen generates a lot of warnings on Windows 10 + MinGW.
 
-To build the three executables without the Makefile, execute the following commands:  
+To build the three required executables `make` (or `mingw32-make.exe` on Windows), execute the following commands:  
 `g++ -Wall -I. -O2 -fopenmp -o embed spectralDrawing.cpp`  
 `g++ -Wall -I. -O2 -o mtx2csr mtx2csr.cpp`  
 `gcc -Wall -O2 -std=c99 -o draw draw_graph.c lodepng.c`  
-Just doing `make` (or `mingw32-make.exe` on Windows) on the command line will execute the above three commands.
-Note that Eigen generates a lot of warnings on Windows 10 + MinGW.
 
-## Usage Examples
+## Usage
 
 Get a sparse matrix in Matrix Market format. The [SuiteSparse Matrix Collection](https://sparse.tamu.edu/) is a great resource.  
 `curl -O https://sparse.tamu.edu/MM/Pothen/barth5.tar.gz`  
