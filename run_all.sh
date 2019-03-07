@@ -14,6 +14,7 @@ if [ ! -f $mtx ]; then
 	cd data
 	curl -O https://sparse.tamu.edu/MM/$matgroup/$mat.tar.gz
 	tar -zvxf $mat.tar.gz
+	rm -f $mat.tar.gz
 	cd ..
 fi
 
@@ -77,7 +78,7 @@ do
 				mv data/$mat/$mat.csr_* data/$mat/coord_coarse.mtx
 				mv graph_coarse.csr data/$mat/.
 				mv graph_coarse.mtx data/$mat/.
-				./draw data/$mat/$mat.csr data/$mat/coord.mtx graph_draw.png
+				./draw data/$mat/graph_coarse.csr data/$mat/coord_coarse.mtx graph_draw.png
 				cp graph_draw.png data/$mat/coarse.png
         			rm graph_draw.png
 			fi
