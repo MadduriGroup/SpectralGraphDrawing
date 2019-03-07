@@ -199,7 +199,10 @@ int main(int argc, char *argv[])
 
     //fprintf(stdout, "Done with writing to file: %s \n", outFileName);
     fclose( writeBinaryPtr );
-     
+
+    free(num_edges);
+    free(adj);
+
     return 0;
 }
 
