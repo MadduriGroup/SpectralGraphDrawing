@@ -158,14 +158,22 @@ main (int argc, char **argv)
         }
     }
 
+    // Commenting out SVG generation code
+    // FILE *outfp = fopen("graph.svg", "w");
+    // fprintf(outfp, "<svg viewBox=\"0 0 %d %d\" xmlns=\"http://www.w3.org/2000/svg\">\n<g stroke=\"black\">\n", width, height);
+
     for (uint32_t u=0; u<g.n; u++) {
         for (int j=g.offsets[u]; j<g.offsets[u+1]; j++) {
             uint32_t v = g.adj[j];
             if (u < v) {
+                // fprintf(outfp, "<line x1=\"%u\" y1=\"%u\" x2=\"%u\" y2=\"%u\" />\n", 
+                // ((unsigned) floor(vx[u])), ((unsigned) floor(vy[u])), ((unsigned) floor(vx[v])), ((unsigned) floor(vy[v])));
                 draw_line(floor(vx[u]), floor(vy[u]), floor(vx[v]), floor(vy[v]), image, width);
             }
         }
     }
+    // fprintf(outfp, "</g>\n</svg>\n");
+    // fclose(outfp);
  
     unsigned error = lodepng_encode32_file(out_filename, image, width, height);
     /*if there's an error, display it*/
