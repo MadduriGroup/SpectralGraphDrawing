@@ -90,7 +90,7 @@ gf=data/$mat/graphs.html
 if [ ! -f $gf ]; then
 	echo "<!DOCTYPE html>" >> $gf
 	echo "<html>" >> $gf
-	echo "<title>"$mat"</title>" >> $gf
+	echo '<title>'$mat"</title>" >> $gf
 	echo '<xmp theme="united" style="display:none;">' >> $gf
 	# Markdown goes here
 	echo "## Koren's alg  " >> $gf
