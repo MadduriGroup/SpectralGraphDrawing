@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     int curr_vertex = 1, temp_vertex = 0;
 
     char line [ 200 ];
-    int lineCount = 0, comment = 0;
+    int lineCount = 0;
 
     int symmetric = 0;
  
@@ -67,7 +67,6 @@ int main(int argc, char *argv[])
 		    undirected = symmetric ;
 		}
 	    } 
-	    comment ++;
 	    continue;
 	}
           
