@@ -20,15 +20,15 @@ If you are unable to run the bootstrap.sh script or get some errors, please exec
 `tar -zvxf 3.3.7.tar.gz`  
 `mv eigen-eigen-*/Eigen .`  
 `rm -rf eigen-eigen-* 3.3.7.tar.gz`  
-`curl -O https://github.com/lvandeve/lodepng/blob/master/lodepng.h`  
-`curl -O https://github.com/lvandeve/lodepng/blob/master/lodepng.cpp`  
+`curl -O https://raw.githubusercontent.com/lvandeve/lodepng/master/lodepng.h`  
+`curl -O https://raw.githubusercontent.com/lvandeve/lodepng/master/lodepng.cpp`  
 `mv lodepng.cpp lodepng.c`  
 Our code will only use some header files from the Eigen directory. Note that Eigen generates a lot of warnings on Windows 10 + MinGW.
 
 To build the three required executables without using `make` (or `mingw32-make.exe` on Windows), execute the following commands:  
-`g++ -Wall -I. -O2 -fopenmp -o embed spectralDrawing.cpp`  
-`g++ -Wall -I. -O2 -o mtx2csr mtx2csr.cpp`  
-`gcc -Wall -O2 -std=c99 -o draw draw_graph.c lodepng.c`  
+`g++ -std=c++11 -I. -Wall -O2 -fopenmp -o embed spectralDrawing.cpp`  
+`g++ -I. -Wall -O2 -o mtx2csr mtx2csr.cpp`  
+`gcc -std=c99 -Wall -O2 -o draw draw_graph.c lodepng.c`  
 
 ## Usage
 

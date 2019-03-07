@@ -1,8 +1,8 @@
 .POSIX:
 CXX      = g++
-CXXFLAGS = -Wall -I. -O2 -fopenmp
+CXXFLAGS = -I. -std=c++11 -Wall -O2 -fopenmp
 CC       = gcc
-CFLAGS   = -Wall -O2 -std=c99
+CFLAGS   = -std=c99 -Wall -O2
 
 # Add .exe on Windows
 EXEEXT   = 

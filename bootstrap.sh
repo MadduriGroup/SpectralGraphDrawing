@@ -6,6 +6,6 @@ mv eigen-eigen-*/Eigen .
 rm -rf eigen-eigen-* 3.3.7.tar.gz
 
 # get the lode PNG encoder
-curl -O https://github.com/lvandeve/lodepng/blob/master/lodepng.h
-curl -O https://github.com/lvandeve/lodepng/blob/master/lodepng.cpp
+curl -O https://raw.githubusercontent.com/lvandeve/lodepng/master/lodepng.h
+curl -O https://raw.githubusercontent.com/lvandeve/lodepng/master/lodepng.cpp
 mv lodepng.cpp lodepng.c
