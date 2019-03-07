@@ -43,7 +43,7 @@ draw_line(int x0, int y0, int x1, int y1, unsigned char *image, unsigned width) 
 
   int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
   int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1; 
-  int err = (dx>dy ? dx : -dy)/2, e2;
+  int err = (dx>dy ? dx : -dy)/2;
 
   for(;;){
     image[4 * width * y0 + 4 * x0 + 0] = 0;
@@ -51,7 +51,7 @@ draw_line(int x0, int y0, int x1, int y1, unsigned char *image, unsigned width) 
     image[4 * width * y0 + 4 * x0 + 2] = 0;
     image[4 * width * y0 + 4 * x0 + 3] = 255;
     if (x0==x1 && y0==y1) break;
-    e2 = err;
+    int e2 = err;
     if (e2 >-dx) { err -= dy; x0 += sx; }
     if (e2 < dy) { err += dx; y0 += sy; }
   }
@@ -101,7 +101,6 @@ main (int argc, char **argv)
     fprintf(stderr, "Num edges: %ld, num vertices: %u\n", m/2, g.n);
 
     char *vertex_coords_filename = argv[2];
-    start_timer = timer();  
     infp = fopen(vertex_coords_filename, "r");
     if (infp == NULL) {
         fprintf(stderr, "Error: Could not open vertex coords file. Exiting ...\n");
