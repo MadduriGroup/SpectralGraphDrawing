@@ -1,6 +1,6 @@
 .POSIX:
 CXX      = g++
-CXXFLAGS = -Wall -I. -O2
+CXXFLAGS = -Wall -I. -O2 -fopenmp
 CC       = gcc
 CFLAGS   = -Wall -O2 -std=c99
 
