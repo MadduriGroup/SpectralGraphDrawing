@@ -1,4 +1,6 @@
 # Prerequisites
+Eigen/
+data/
 *.d
 
 # Compiled Object files
