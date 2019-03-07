@@ -10,7 +10,7 @@ Please see spectralDrawing.cpp. The C++ linear algebra library [Eigen](http://ei
 `gcc -Wall -O2 -o draw draw_graph.c lodepng.c`  
 Note that Eigen generates a lot of warnings on Windows 10 + MinGW.
 
-### Usage Examples
+## Usage Examples
 
 Get a sparse matrix in Matrix Market format. The [SuiteSparse Matrix Collection](https://sparse.tamu.edu/) is a great resource.  
 `curl -O https://sparse.tamu.edu/MM/Pothen/barth5.tar.gz`  
