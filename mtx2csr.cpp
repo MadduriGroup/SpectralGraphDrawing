@@ -152,8 +152,8 @@ int main(int argc, char *argv[]) {
     // Identify largest connected component
     unsigned int numComps = 0;
     vector<unsigned int> CompID(N, 0);
-    vector<unsigned int> compSizes(N+1, 0);
-    compSizes[0] = 0;
+    // vector<unsigned int> compSizes(N+1, 0);
+    // compSizes[0] = 0;
     unsigned int largestCompSize = 0;
     unsigned int largestCompID   = 0;
  
@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
             }
             currentPosS++;
         }
-        compSizes[numComps] = visitedCount;
+        // compSizes[numComps] = visitedCount;
         if (visitedCount > largestCompSize) {
             largestCompSize = visitedCount;
             largestCompID = numComps;
