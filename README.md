@@ -39,7 +39,7 @@ Get a sparse matrix in Matrix Market format. The [SuiteSparse Matrix Collection]
 `tar -zvxf barth5.tar.gz`  
 
 Convert the file to intermediate binary representation.  
-`./mtx2csr barth5/barth5.mtx barth5/barth5`  
+`./mtx2csr barth5/barth5.mtx barth5/barth5.csr`  
 
 Execute the graph drawing code, choosing the desired variant. In the example below, we choose coarsening, no High Dimensional Embedding, and Koren+Tutte refinement.  
 `./embed barth5/barth5.csr 1 0 3`  

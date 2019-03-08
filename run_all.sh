@@ -24,7 +24,7 @@ if [ ! -f data/$mat/yifan.gif ]; then
 fi
 
 #Convert mtx file to csr format
-./mtx2csr data/$mat/$mat.mtx data/$mat/$mat
+./mtx2csr data/$mat/$mat.mtx data/$mat/$mat.csr
 
 #Generate coordinates
 for c in 0
