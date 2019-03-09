@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
                 headerWord = string("general");
                 found = str.find(headerWord);
                 if (found != string::npos) {
-                    cout << "Matrix is not symmetric, reading bipartite graph." << endl;
+                    cout << "Non-zero pattern is not symmetric." << endl;
                     symmetricFormat = 0;
                 }
 
@@ -83,8 +83,15 @@ int main(int argc, char *argv[]) {
                 assert(N1 == N2);
                 N = N1;
             } else {
-                assert(N1 != N2);
-                N = N1 + N2;
+                if (N1 == N2) {
+                    // read A+A'
+                    symmetricFormat = 1;
+                    cout << "Reading general matrix as an undirected graph." << endl;
+                    N = N1;
+                } else {
+                    cout << "Reading general matrix as a bipartite graph." << endl;
+                    N = N1+N2;
+                }
             }
             AdjVector.resize(N);
         } else {
@@ -152,6 +159,7 @@ int main(int argc, char *argv[]) {
     // Identify largest connected component
     unsigned int numComps = 0;
     vector<unsigned int> CompID(N, 0);
+    vector<unsigned int> S(N);
     // vector<unsigned int> compSizes(N+1, 0);
     // compSizes[0] = 0;
     unsigned int largestCompSize = 0;
@@ -163,9 +171,7 @@ int main(int argc, char *argv[]) {
         }
 
         // Do a BFS from vertex i
-        numComps++;
-        vector<unsigned int> S(N);
-        
+        numComps++;       
         S[0] = i;
         CompID[i] = numComps;
         unsigned int currentPosS = 0;
