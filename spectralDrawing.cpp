@@ -279,7 +279,7 @@ simpleCoarsening(graph_t *g, int coarseningType) {
   unsigned int *rowOffsetsCoarse_noloops = (unsigned int *)
   malloc((N+1)*sizeof(unsigned int));
   assert(rowOffsetsCoarse_noloops != NULL);
-  for (unsigned int i=0; i<N+1; i++) {
+  for (long i=0; i<N+1; i++) {
     rowOffsetsCoarse_noloops[i] = 0;
   }
 
@@ -288,7 +288,7 @@ simpleCoarsening(graph_t *g, int coarseningType) {
     for (unsigned int j=g->rowOffsetsCoarse[i]; 
                       j<g->rowOffsetsCoarse[i+1]; j++) {
       unsigned int v = g->adjCoarse[j];
-      if (i == v) {
+      if (((unsigned int) i) == v) {
         num_self_loops++;
       } else {
         rowOffsetsCoarse_noloops[i+1]++;
@@ -296,7 +296,7 @@ simpleCoarsening(graph_t *g, int coarseningType) {
     }
   } 
  
-  for (unsigned int i=1; i<N+1; i++) {
+  for (long i=1; i<N+1; i++) {
     rowOffsetsCoarse_noloops[i] += rowOffsetsCoarse_noloops[i-1];
   }
    
@@ -315,7 +315,7 @@ simpleCoarsening(graph_t *g, int coarseningType) {
     for (unsigned int j=g->rowOffsetsCoarse[i]; 
                       j<g->rowOffsetsCoarse[i+1]; j++) {
       unsigned int v = g->adjCoarse[j];
-      if (i == v) {
+      if (((unsigned int) i) == v) {
         num_self_loops++;
       } else {
         adjCoarse_noloops[ec++] = v;
@@ -382,12 +382,12 @@ loadToMatrix(SparseMatrix<double,RowMajor>& M, VectorXd& degrees,
    
     tripletList.reserve(g->m_coarse);
  
-    for (unsigned int i=0; i<g->n_coarse; i++) {
+    for (long i=0; i<g->n_coarse; i++) {
       double diag_val = 0;
       double inv_2deg = 1/(2.0*degrees(i));
       for (unsigned int j=g->rowOffsetsCoarse[i]; j<g->rowOffsetsCoarse[i+1]; j++) {
         unsigned int v = g->adjCoarse[j];
-        if (v == i) {
+        if (v == ((unsigned int) i)) {
           diag_val = g->eweights[j]*inv_2deg;
         } else {
           tripletList.push_back(T(i, v, g->eweights[j]*inv_2deg));
@@ -448,11 +448,11 @@ HDE(SparseMatrix<double,RowMajor>& M, graph_t *g,
   std::vector<T> LTripletList;
   LTripletList.reserve(g->m);
   for (int i=0; i<g->n; i++) {
-  LTripletList.push_back(T(i,i,degrees(i)));
+    LTripletList.push_back(T(i,i,degrees(i)));
     for (unsigned int j=g->rowOffsets[i]; j<g->rowOffsets[i+1]; j++) {
       unsigned int v = g->adj[j];
       LTripletList.push_back(T(i,v, -1.0));
-  }
+    }
   }
   SparseMatrix<double,RowMajor> L(n,n);
   L.setFromTriplets(LTripletList.begin(), LTripletList.end()); 
@@ -466,7 +466,7 @@ HDE(SparseMatrix<double,RowMajor>& M, graph_t *g,
   min_dist.setOnes();
   min_dist = min_dist * INT_MAX;
 
-  int maxM = 10;
+  int maxM = 50;
   VectorXd tmp(n);
   tmp.setOnes();
   tmp.normalize();
@@ -475,45 +475,63 @@ HDE(SparseMatrix<double,RowMajor>& M, graph_t *g,
   dist.col(0) = tmp;
 
   int start_idx = 0;
-  int j = 1;
-  for (int run_count=0; run_count<maxM; run_count++) {
-    dist.col(j) = bfs(g->rowOffsets, g->adj, n, m, start_idx);
-    dist_bak.col(j-1) = dist.col(j);
-
+  for (int run_count=1; run_count<=maxM; run_count++) {
+    dist.col(run_count) = bfs(g->rowOffsets, g->adj, n, m, start_idx);
+    
     int max = -1;
-    for (unsigned int i=0; i<n; i++) {
-      if (dist.col(j)(i) < min_dist[i]) {
-        min_dist[i] = dist.col(j)(i);
+    for (long i=0; i<n; i++) {
+      if (dist.col(run_count)(i) < min_dist[i]) {
+        min_dist[i] = dist.col(run_count)(i);
       }
-      if (max < min_dist[i]) {
+      if (min_dist[i] > max) {
         max = min_dist[i];
         start_idx = i;
       }
     }
+    dist.col(run_count).normalize();
+  }
+
+  int j = 1;
+  for (int run_count=0; run_count<maxM; run_count++) {
 
     for (int k=0; k<j; k++) {
+      // D-orthogonalize
+#if 1
+      VectorXd dnormvec(n);
+      dnormvec = dist.col(k).cwiseProduct(degrees);
+      double multplr_denom = dist.col(k).dot(dnormvec);
+      double multplr_num = dist.col(j).dot(dnormvec);
+      dist.col(j) = dist.col(j) - (multplr_num * dist.col(k))/multplr_denom;
+#endif
+#if 0
       double multplr = dist.col(j).dot(dist.col(k));
       dist.col(j) = dist.col(j) - multplr * dist.col(k);
+#endif
     }
 
     double normdist = dist.col(j).norm();
-    if (normdist < 0.1) {
-      j --;
+    if (normdist < 0.001) {
+      std::cout << "discarding vec " << j << ", normdist " << normdist << std::endl;
+      j--;
     } else {
+      // std::cout << "j " << j << ", normdist " << normdist << std::endl;
       dist.col(j).normalize();
     }
-    j ++;
+
+    dist_bak.col(j-1) = dist.col(j); 
+    j++;
   }
 
-  MatrixXd LX(n,j-1);
-  LX = L * dist.leftCols(j).rightCols(j-1);
+  MatrixXd LX(n, maxM);
+  LX = L * dist_bak;
 
-  MatrixXd XtLX(j-1,j-1);
-  XtLX = dist.leftCols(j).rightCols(j-1).transpose() * LX;
+  MatrixXd XtLX(maxM, maxM);
+  XtLX = dist_bak.transpose() * LX;
 
   SelfAdjointEigenSolver<MatrixXd> es(XtLX);
-  MatrixXd init_vecs (n, 2);
-  init_vecs = dist_bak.leftCols(j-1) * es.eigenvectors().leftCols(2).real() ;
+  MatrixXd init_vecs(n, 2);
+  init_vecs = dist_bak * es.eigenvectors().leftCols(2).real();
+
   endTimerPart = std::chrono::high_resolution_clock::now();
   elt = endTimerPart - startTimerPart;
   std::cout << "HDE Initialization time " << elt.count() << " s." << std::endl;
@@ -571,7 +589,6 @@ powerIterationKoren(SparseMatrix<double,RowMajor>& M,
 
     num_iterations1++;
    
-
     // double residual_norm1 =
     //  residual.lpNorm<Infinity>()/(uk_hat.maxCoeff()-uk_hat.minCoeff());
 
@@ -796,7 +813,9 @@ int main(int argc, char **argv) {
   fread(&m, 1, sizeof(long), infp);
   fread(rest, 4, sizeof(long), infp);
   rowOffsets = (unsigned int *) malloc (sizeof(unsigned int) * (n+1));
+  assert(rowOffsets != NULL);
   adj = (unsigned int *) malloc (sizeof(unsigned int) * m);
+  assert(adj != NULL);
   fread(rowOffsets, n+1, sizeof(unsigned int), infp);
   fread(adj, m, sizeof(unsigned int), infp);
   fclose(infp);
