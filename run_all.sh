@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -z "$2" ]; then
-	echo "Usage: ./run.sh <SuiteSparse group name> <mat-name>"
+	echo "Usage: ./run_all.sh <SuiteSparse group name> <mat-name>"
 	exit 1
 fi
 matgroup=$1
