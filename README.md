@@ -25,7 +25,7 @@ If you are unable to run the bootstrap.sh script or get some errors, please exec
 `curl -O https://raw.githubusercontent.com/lvandeve/lodepng/master/lodepng.h`  
 `curl -O https://raw.githubusercontent.com/lvandeve/lodepng/master/lodepng.cpp`  
 `mv lodepng.cpp lodepng.c`  
-Our code will only use some header files from the Eigen directory. Note that Eigen generates a lot of warnings on Windows 10 + MinGW.
+Our code will only use some header files from the Eigen directory.
 
 To build the three required executables without using `make` (or `mingw32-make.exe` on Windows), execute the following commands:  
 `g++ -std=c++11 -I. -Wall -O2 -fopenmp -o embed spectralDrawing.cpp`  
