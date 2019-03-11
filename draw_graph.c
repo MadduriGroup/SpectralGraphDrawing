@@ -129,7 +129,14 @@ main (int argc, char **argv)
         if (y < ymin) ymin = y; 
     }
     fclose(infp);
-    // fprintf(stderr, "xmin %lf xmax %lf ymin %lf ymax %lf\n", xmin, xmax, ymin, ymax);
+
+    double aspect_ratio = (xmax-xmin)/(ymax-ymin);
+    fprintf(stderr, "xmin %lf xmax %lf ymin %lf ymax %lf, aspect ratio %3.4lf\n", 
+                    xmin, xmax, ymin, ymax, aspect_ratio);
+    width = sqrt(100*n/aspect_ratio);
+    height = aspect_ratio*width;
+    fprintf(stderr, "Computed width %u, height %u\n", width, height);
+
 
     double xrange_inv = 1.0/(xmax-xmin);
     double yrange_inv = 1.0/(ymax-ymin);
@@ -139,8 +146,8 @@ main (int argc, char **argv)
         if (vx[i] < 0) vx[i] = 0;
         if (vy[i] < 0) vy[i] = 0;
         /* handle cases where we might exceed bounds */
-        if (vx[i] >= (width-1.1)) vx[i] = width-1.1;
-        if (vy[i] >= (height-1.1)) vy[i] = height-1.1;
+        if (vx[i] > (width-1)) vx[i] = width-1;
+        if (vy[i] > (height-1)) vy[i] = height-1;
     }
 
     char *out_filename = argv[3];
